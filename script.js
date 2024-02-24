@@ -105,6 +105,11 @@ function getOperator() {
 }
 
 function calculate() {
+  if (operator == "÷" && secondOperand == 0) {
+    clear();
+    displayValue.textContent = "Error";
+    return;
+  }
   firstOperand = Number(firstOperand);
   secondOperand = Number(secondOperand);
   firstOperand = operate(operator, firstOperand, secondOperand);
