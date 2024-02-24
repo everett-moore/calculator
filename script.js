@@ -57,6 +57,17 @@ function sign() {
   displayValue.textContent = firstOperand;
 }
 
+function percent() {
+  if (operatorReady) {
+    secondOperand = Number(secondOperand) * 0.01;
+    displayValue.textContent = secondOperand;
+    return;
+  }
+  if (firstOperand == "") return;
+  firstOperand = Number(firstOperand) * 0.01;
+  displayValue.textContent = firstOperand;
+}
+
 function appendNumber() {
   if (displayValue.textContent.length < 7) {
     if (operatorReady) {
