@@ -68,6 +68,22 @@ function percent() {
   displayValue.textContent = firstOperand;
 }
 
+function appendDecimal() {
+  if (operatorReady) {
+    if (secondOperand.includes(".")) return;
+    secondOperand = secondOperand += ".";
+    displayValue.textContent = secondOperand;
+    return;
+  }
+  if (firstOperand == "") {
+    firstOperand = "0" + ".";
+    displayValue.textContent = firstOperand;
+  }
+  if (firstOperand.includes(".")) return;
+  firstOperand = firstOperand += ".";
+  displayValue.textContent = firstOperand;
+}
+
 function appendNumber() {
   if (displayValue.textContent.length < 7) {
     if (operatorReady) {
