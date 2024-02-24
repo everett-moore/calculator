@@ -46,7 +46,16 @@ function clear() {
   operatorReady = false;
 }
 
-function sign() {}
+function sign() {
+  if (operatorReady) {
+    secondOperand = Number(secondOperand) * -1;
+    displayValue.textContent = secondOperand;
+    return;
+  }
+  if (firstOperand == "") return;
+  firstOperand = Number(firstOperand) * -1;
+  displayValue.textContent = firstOperand;
+}
 
 function appendNumber() {
   if (displayValue.textContent.length < 7) {
