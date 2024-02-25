@@ -7,7 +7,7 @@ body {
   flex-direction: column;
   background-color: #fecee9;
   font-family: "Roboto", sans-serif;
-  font-size: 75px;
+  font-size: 45px;
 }
 
 #calculator {
@@ -18,26 +18,27 @@ body {
   background-color: #011c27;
   border-radius: 30px;
   padding: 30px;
-  height: 450px;
+  min-height: 450px;
   width: 300px;
 }
 
 .container {
   display: inherit;
-  flex-grow: 1;
+  flex: 1;
 }
 
 #displayValue {
-  display: inherit;
+  text-align: right;
+  word-wrap: break-word;
+  word-break: break-all;
   margin-bottom: 10px;
-  justify-content: flex-end;
   color: #eb9fef;
 }
 
 button {
   flex: 1;
   border-color: #eb9fef;
-  font-size: 25px;
+  font-size: 20px;
   color: #fecee9;
   background-color: #011c27;
   border-radius: 2px;
@@ -53,5 +54,5 @@ button:hover {
 }
 
 .operatorBtn {
-  flex-grow: 1.5;
+  flex-grow: 1.9;
 }

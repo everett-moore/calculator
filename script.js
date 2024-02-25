@@ -3,12 +3,12 @@ let firstOperand = "";
 let secondOperand = "";
 let operator = "";
 const displayValue = document.querySelector("#displayValue");
+displayValue.textContent = "0";
 const buttons = document.querySelectorAll("button");
 buttons.forEach((button) => {
   button.value = button.textContent;
   button.addEventListener("click", () => {
     currentValue = button.value;
-    console.log(currentValue);
     switch (currentValue) {
       case "AC":
         clear();
@@ -85,15 +85,13 @@ function appendDecimal() {
 }
 
 function appendNumber() {
-  if (displayValue.textContent.length < 7) {
-    if (operatorReady) {
-      secondOperand += currentValue;
-      displayValue.textContent = secondOperand;
-      return;
-    }
-    firstOperand += currentValue;
-    displayValue.textContent = firstOperand;
+  if (operatorReady) {
+    secondOperand += currentValue;
+    displayValue.textContent = secondOperand;
+    return;
   }
+  firstOperand += currentValue;
+  displayValue.textContent = firstOperand;
 }
 
 function getOperator() {
