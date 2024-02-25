@@ -10,9 +10,9 @@
     <div id="calculator">
       <div id="displayValue">0</div>
       <div class="container">
-        <button>AC</button>
-        <button>±</button>
-        <button>%</button>
+        <button id="allClear">AC</button>
+        <button class="operatorBtn">±</button>
+        <button class="operatorBtn">%</button>
         <button class="operatorBtn">÷</button>
       </div>
       <div class="container">
@@ -34,11 +34,23 @@
         <button class="operatorBtn">+</button>
       </div>
       <div class="container">
-        <button id="grow">0</button>
+        <button>0</button>
         <button>.</button>
-        <button class="operatorBtn">=</button>
+        <button id="equalsBtn">=</button>
       </div>
     </div>
+    <footer class="footer">
+      <span> © </span>
+      <a
+        href="https://github.com/everett-moore"
+        target="_blank"
+        class="githubLink"
+        >everett-moore</a
+      >
+      <script>
+        document.write(new Date().getFullYear());
+      </script>
+    </footer>
     <script src="./script.js"></script>
   </body>
 </html>

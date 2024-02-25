@@ -75,10 +75,6 @@ function appendDecimal() {
     displayValue.textContent = secondOperand;
     return;
   }
-  if (firstOperand == "") {
-    firstOperand = "0" + ".";
-    displayValue.textContent = firstOperand;
-  }
   if (firstOperand.includes(".")) return;
   firstOperand = firstOperand += ".";
   displayValue.textContent = firstOperand;
@@ -106,8 +102,8 @@ function calculate() {
   if (firstOperand == "" || secondOperand == "") return;
   operatorReady = false;
   if (operator == "÷" && secondOperand == 0) {
-    clear();
     displayValue.textContent = "Error";
+    secondOperand = "";
     return;
   }
   firstOperand = Number(firstOperand);
