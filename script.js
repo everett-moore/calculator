@@ -105,6 +105,7 @@ function getOperator() {
 }
 
 function calculate() {
+  operatorReady = false;
   if (operator == "÷" && secondOperand == 0) {
     clear();
     displayValue.textContent = "Error";
@@ -115,7 +116,9 @@ function calculate() {
   firstOperand = operate(operator, firstOperand, secondOperand);
   secondOperand = "";
   displayValue.textContent = firstOperand;
-  operatorReady = false;
+  if (displayValue.textContent.length > 7) {
+    displayValue.textContent = Math.round(firstOperand * 1000) / 1000;
+  }
 }
 
 function add(a, b) {
