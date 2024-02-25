@@ -103,6 +103,7 @@ function getOperator() {
 }
 
 function calculate() {
+  if (firstOperand == "" || secondOperand == "") return;
   operatorReady = false;
   if (operator == "÷" && secondOperand == 0) {
     clear();
