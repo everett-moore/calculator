@@ -1,3 +1,5 @@
-#calculator
+# calculator
+
 Simple calculator for the Odin Project.
-.[calculator](https://everett-moore.github.io/calculator/)
+
+[calculator](https://everett-moore.github.io/calculator/)
