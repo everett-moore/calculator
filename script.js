@@ -1,5 +1,5 @@
 let operatorReady = false;
-let firstOperand = "";
+let firstOperand = "0";
 let secondOperand = "";
 let operator = "";
 const displayValue = document.querySelector("#displayValue");
@@ -38,7 +38,7 @@ buttons.forEach((button) => {
 });
 
 function clear() {
-  firstOperand = "";
+  firstOperand = "0";
   secondOperand = "";
   operator = "";
   currentValue = "";
@@ -83,11 +83,11 @@ function appendDecimal() {
 function appendNumber() {
   if (operatorReady) {
     secondOperand += currentValue;
-    displayValue.textContent = secondOperand;
+    displayValue.textContent = parseInt(secondOperand);
     return;
   }
   firstOperand += currentValue;
-  displayValue.textContent = firstOperand;
+  displayValue.textContent = parseInt(firstOperand);
 }
 
 function getOperator() {
@@ -99,21 +99,21 @@ function getOperator() {
 }
 
 function calculate() {
-  if (firstOperand == "" || secondOperand == "") return;
   operatorReady = false;
+  if (firstOperand == "" || secondOperand == "") return;
   if (operator == "÷" && secondOperand == 0) {
     displayValue.textContent = "Error";
     secondOperand = "";
     return;
   }
-  firstOperand = Number(firstOperand);
-  secondOperand = Number(secondOperand);
-  firstOperand = operate(operator, firstOperand, secondOperand);
+
+  firstOperand = operate(
+    operator,
+    parseFloat(firstOperand),
+    parseFloat(secondOperand)
+  );
   secondOperand = "";
   displayValue.textContent = firstOperand;
-  if (displayValue.textContent.length > 7) {
-    displayValue.textContent = Math.round(firstOperand * 1000) / 1000;
-  }
 }
 
 function add(a, b) {
