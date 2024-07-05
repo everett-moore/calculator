@@ -1,138 +1,100 @@
-let operatorReady = false;
-let firstOperand = "0";
+let firstOperand = "";
 let secondOperand = "";
-let operator = "";
-const displayValue = document.querySelector("#displayValue");
-displayValue.textContent = "0";
-const buttons = document.querySelectorAll("button");
-buttons.forEach((button) => {
-  button.value = button.textContent;
-  button.addEventListener("click", () => {
-    currentValue = button.value;
-    switch (currentValue) {
-      case "AC":
-        clear();
-        break;
-      case "±":
-        sign();
-        break;
-      case "%":
-        percent();
-        break;
-      case ".":
-        appendDecimal();
-        break;
-      case "+":
-      case "-":
-      case "×":
-      case "÷":
-        getOperator();
-        break;
-      case "=":
-        calculate();
-        break;
-      default:
-        appendNumber();
-    }
-  });
+let currentOperator = null;
+
+const displayValue = document.getElementById("displayValue");
+const allClear = document.getElementById("allClear");
+const signBtn = document.getElementById("sign");
+const percentBtn = document.getElementById("percent");
+const pointBtn = document.getElementById("point");
+const equalsBtn = document.getElementById("equalsBtn");
+const numBtns = document.querySelectorAll(".numBtn");
+const operatorBtns = document.querySelectorAll(".operatorBtn");
+
+allClear.addEventListener("click", clear);
+signBtn.addEventListener("click", toggleSign);
+percentBtn.addEventListener("click", applyPercent);
+pointBtn.addEventListener("click", appendPoint);
+equalsBtn.addEventListener("click", evaluate);
+
+numBtns.forEach((numBtn) => {
+  numBtn.addEventListener("click", () => updateOperand(numBtn.textContent));
+});
+
+operatorBtns.forEach((operatorBtn) => {
+  operatorBtn.addEventListener("click", () =>
+    updateOperator(operatorBtn.textContent)
+  );
 });
 
 function clear() {
-  firstOperand = "0";
+  firstOperand = "";
   secondOperand = "";
-  operator = "";
-  currentValue = "";
-  displayValue.textContent = "0";
-  operatorReady = false;
+  currentOperator = null;
+  displayValue.textContent = 0;
 }
 
-function sign() {
-  if (operatorReady) {
-    secondOperand = Number(secondOperand) * -1;
+function toggleSign() {
+  if (secondOperand !== "") {
+    secondOperand = (Number(secondOperand) * -1).toString(); // Toggle sign correctly
     displayValue.textContent = secondOperand;
-    return;
   }
-  if (firstOperand == "") return;
-  firstOperand = Number(firstOperand) * -1;
-  displayValue.textContent = firstOperand;
 }
 
-function percent() {
-  if (operatorReady) {
-    secondOperand = Number(secondOperand) * 0.01;
+function applyPercent() {
+  if (secondOperand !== "") {
+    secondOperand = (Number(secondOperand) / 100).toString(); // Apply percent correctly
     displayValue.textContent = secondOperand;
-    return;
   }
-  if (firstOperand == "") return;
-  firstOperand = Number(firstOperand) * 0.01;
-  displayValue.textContent = firstOperand;
 }
 
-function appendDecimal() {
-  if (operatorReady) {
-    if (secondOperand.includes(".")) return;
-    secondOperand = secondOperand += ".";
+function appendPoint() {
+  if (!secondOperand.includes(".")) {
+    if (secondOperand == "") {
+      secondOperand += "0.";
+    } else {
+      secondOperand += ".";
+    }
     displayValue.textContent = secondOperand;
-    return;
   }
-  if (firstOperand.includes(".")) return;
-  firstOperand = firstOperand += ".";
-  displayValue.textContent = firstOperand;
 }
 
-function appendNumber() {
-  if (operatorReady) {
-    secondOperand += currentValue;
-    displayValue.textContent = parseInt(secondOperand);
+function evaluate() {
+  if (firstOperand === "" || secondOperand === "" || currentOperator === null)
     return;
-  }
-  firstOperand += currentValue;
-  displayValue.textContent = parseInt(firstOperand);
-}
-
-function getOperator() {
-  if (operatorReady) {
-    calculate();
-  }
-  operator = currentValue;
-  operatorReady = true;
-}
-
-function calculate() {
-  operatorReady = false;
-  if (firstOperand == "" || secondOperand == "") return;
-  if (operator == "÷" && secondOperand == 0) {
-    displayValue.textContent = "Error";
-    secondOperand = "";
-    return;
-  }
-
-  firstOperand = operate(
-    operator,
-    parseFloat(firstOperand),
-    parseFloat(secondOperand)
+  let result = operate(
+    Number(firstOperand),
+    Number(secondOperand),
+    currentOperator
   );
+  displayValue.textContent = result;
+  secondOperand = result.toString();
+  firstOperand = "";
+  currentOperator = null;
+}
+
+function updateOperand(num) {
+  secondOperand += num;
+  displayValue.textContent = secondOperand;
+}
+
+function updateOperator(op) {
+  evaluate();
+  if (secondOperand !== "") {
+    firstOperand = secondOperand;
+  } else {
+    firstOperand = "0";
+  }
+  currentOperator = op;
   secondOperand = "";
-  displayValue.textContent = firstOperand;
 }
 
-function add(a, b) {
-  return a + b;
-}
+let add = (a, b) => a + b;
+let subtract = (a, b) => a - b;
+let multiply = (a, b) => a * b;
+let divide = (a, b) => a / b;
 
-function subtract(a, b) {
-  return a - b;
-}
-
-function multiply(a, b) {
-  return a * b;
-}
-
-function divide(a, b) {
-  return a / b;
-}
-
-function operate(operator, a, b) {
+function operate(a, b, operator) {
   switch (operator) {
     case "+":
       return add(a, b);
