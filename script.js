@@ -1,7 +1,3 @@
-let firstOperand = "";
-let secondOperand = "";
-let currentOperator = null;
-
 const displayValue = document.getElementById("displayValue");
 const allClear = document.getElementById("allClear");
 const signBtn = document.getElementById("sign");
@@ -10,6 +6,10 @@ const pointBtn = document.getElementById("point");
 const equalsBtn = document.getElementById("equalsBtn");
 const numBtns = document.querySelectorAll(".numBtn");
 const operatorBtns = document.querySelectorAll(".operatorBtn");
+
+let firstOperand = "";
+let secondOperand = "";
+let currentOperator = null;
 
 allClear.addEventListener("click", clear);
 signBtn.addEventListener("click", toggleSign);
@@ -27,35 +27,35 @@ operatorBtns.forEach((operatorBtn) => {
   );
 });
 
+function updateDisplay(val) {
+  displayValue.textContent = val.toString();
+}
+
 function clear() {
   firstOperand = "";
   secondOperand = "";
   currentOperator = null;
-  displayValue.textContent = 0;
+  updateDisplay(0);
 }
 
 function toggleSign() {
   if (secondOperand !== "") {
-    secondOperand = (Number(secondOperand) * -1).toString(); // Toggle sign correctly
-    displayValue.textContent = secondOperand;
+    secondOperand = (Number(secondOperand) * -1).toString();
+    updateDisplay(secondOperand);
   }
 }
 
 function applyPercent() {
   if (secondOperand !== "") {
-    secondOperand = (Number(secondOperand) / 100).toString(); // Apply percent correctly
-    displayValue.textContent = secondOperand;
+    secondOperand = (Number(secondOperand) / 100).toString();
+    updateDisplay(secondOperand);
   }
 }
 
 function appendPoint() {
   if (!secondOperand.includes(".")) {
-    if (secondOperand == "") {
-      secondOperand += "0.";
-    } else {
-      secondOperand += ".";
-    }
-    displayValue.textContent = secondOperand;
+    secondOperand += secondOperand === "" ? "0." : ".";
+    updateDisplay(secondOperand);
   }
 }
 
@@ -67,7 +67,7 @@ function evaluate() {
     Number(secondOperand),
     currentOperator
   );
-  displayValue.textContent = result;
+  updateDisplay(result);
   secondOperand = result.toString();
   firstOperand = "";
   currentOperator = null;
@@ -75,10 +75,14 @@ function evaluate() {
 
 function updateOperand(num) {
   secondOperand += num;
-  displayValue.textContent = secondOperand;
+  updateDisplay(secondOperand);
 }
 
 function updateOperator(op) {
+  if (currentOperator !== null && secondOperand === "") {
+    currentOperator = op;
+    return;
+  }
   evaluate();
   if (secondOperand !== "") {
     firstOperand = secondOperand;
